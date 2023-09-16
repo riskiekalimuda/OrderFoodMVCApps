@@ -1,0 +1,3 @@
+[submodule "EntitieOrderFoodApp"]
+	path = EntitieOrderFoodApp
+	url = https://github.com/riskiekalimuda/EntitieOrderFoodApp.git
