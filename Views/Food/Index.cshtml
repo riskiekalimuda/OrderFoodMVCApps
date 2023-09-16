@@ -1,0 +1,69 @@
+﻿﻿@using X.PagedList.Mvc.Core; <!--import to get HTML Helper-->
+@using X.PagedList;
+@using X.PagedList.Web.Common;
+
+@{
+}
+
+<title>Food List</title>
+<h3>List of Foods</h3>
+<div class="w-100 mt-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Harga/pcs</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.ListFoods != null)
+            {
+                int startPage = 1;
+                int startCounter = 1;
+                int perpage = ViewBag.ListFoods?.Count;
+                int tempCount = startPage * perpage;
+
+                if (ViewBag.Page > 0)
+                {
+                    startCounter = ((ViewBag.Page - 1) * 5) + 1;
+                }
+
+                startCounter = (tempCount - perpage) + startCounter;
+
+                foreach (var item in ViewBag.ListFoods)
+                {
+                    <tr>
+                        <th scope="row">@startCounter</th>
+                        <td>@item.FoodName</td>
+                        <td>@item.FoodPrice</td>
+                    </tr>
+                    startCounter++;
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+    <!-- paging control for navigation to the previous page, next page, etc -->
+    @Html.PagedListPager((IPagedList)ViewBag.ListFoods, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+    {
+    DisplayItemSliceAndTotal = true,
+    ContainerDivClasses = new[] { "navigation" },
+    LiElementClasses = new[] { "page-item" },
+    PageClasses = new[] { "page-link" },
+    })
+</div>
+
+@section Scripts{
+    <script>
+        // Workaround to fix style of text for showing items .. through ..
+        // Problem related to Boostrap 4 according to issue in link below
+        // https://github.com/dncuug/X.PagedList/issues/127
+        $(document).ready(function () {
+            $('ul.pagination > li.disabled > a').addClass('page-link');
+        });
+    </script>
+}

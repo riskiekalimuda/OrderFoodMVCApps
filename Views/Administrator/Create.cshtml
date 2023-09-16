@@ -1,0 +1,80 @@
+﻿@model FoodOrderEntitie.Models.Administrator
+@{
+    ViewData["Title"] = "Register Page";
+}
+
+
+<div id="app">
+    <section class="section">
+        <a asp-controller="Login" asp-action="Index">Back to Login Form</a>
+        <div class="container mt-5">
+            @if (ViewBag.ErrMessage != null && ViewBag.ErrMessage.Length > 0)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>@ViewBag.ErrMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div class="row">
+                <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+                    <div class="login-brand">
+                        AdminSite
+                    </div>
+
+                    <div class="card card-primary">
+                        <div class="card-header"><h4>Register</h4></div>
+
+                        <div class="card-body">
+                            <form method="POST" asp-controller="Administrator" asp-action="Create">
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="AdminName">Full Name</label>
+                                        <input id="AdminName" type="text" class="form-control" name="AdminName" autofocus>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="AdminPhone">Phone</label>
+                                        <input id="AdminPhone" type="text" class="form-control" name="AdminPhone">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="email" class="form-control" name="AdminEmail">
+                                    <div class="invalid-feedback">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="AdminUserName">Username</label>
+                                    <input id="AdminUserName" type="text" class="form-control" name="AdminUserName">
+                                    <div class="invalid-feedback">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="AdminPassword" class="d-block">Password</label>
+                                        <input id="AdminPassword" type="password" class="form-control" name="AdminPassword">
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="password2" class="d-block">Password Confirmation</label>
+                                        <input id="password2" type="password" class="form-control" name="password-confirm">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Register
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    @* <div class="simple-footer">
+                    Copyright &copy; Stisla 2018
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

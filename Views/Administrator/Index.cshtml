@@ -1,0 +1,77 @@
+﻿@using X.PagedList;
+@using X.PagedList.Web.Common;
+﻿@using X.PagedList.Mvc.Core;
+@{
+    ViewData["Title"] = "Daftar Admin";
+}
+
+<div id="app">
+    <div class="main-wrapper">
+        <div class="navbar-bg"></div>
+        @Html.Partial("_NavBar")
+        @Html.Partial("_SideBar")
+        <div class="main-content">
+            <section class="section">
+                <h1 class="section-header">
+                    <div>Daftar Admin</div>
+                </h1>
+                <div class="section-body">
+                    <div class="jumbotron">
+                        <div class="col-12 mb-3">
+                            <div class="col-6">
+                                <form method="get" asp-controller="Administrator" asp-action="Index">
+                                    <span>Cari: </span>
+                                    <span><input name="keyword" placeholder="Masukkan Kata" /></span>
+                                    <span><input type="submit" value="Cari" /></span>
+                                </form>
+                            </div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">No. Telp</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int startPage = 1;
+                                    int startCounter = 1;
+                                    int perpage = ViewBag.ListAdmin?.Count;
+                                    int tempCount = startPage * perpage;
+
+                                    if (ViewBag.Page > 0)
+                                    {
+                                        startCounter = ((ViewBag.Page - 1) * 5) + 1;
+                                    }
+                                    startCounter = (tempCount - perpage) + startCounter;
+                                }
+                                @foreach (var item in ViewBag.ListAdmin)
+                                {
+                                    <tr>
+                                        <th scope="row">@startCounter</th>
+                                        <td>@item.AdminName</td>
+                                        <td>@item.AdminPhone</td>
+                                        <td>@item.AdminEmail</td>
+                                    </tr>
+                                    startCounter++;
+                                }
+                            </tbody>
+                        </table>
+                        @Html.PagedListPager((IPagedList)ViewBag.ListAdmin, page => Url.Action("Index", new { page = page }),
+                        new PagedListRenderOptions
+                        {
+                        DisplayItemSliceAndTotal = true,
+                        ContainerDivClasses = new[] { "navigation" },
+                        LiElementClasses = new[] { "page-item" },
+                        PageClasses = new[] { "page-link" },
+                        })
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
